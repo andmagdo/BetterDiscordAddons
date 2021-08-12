@@ -4,12 +4,11 @@
  * @authorId 278543574059057154
  * @version 1.8.0
  * @description Required Library for DevilBro's Plugins
- * @invite Jx3TjNS
  * @donate https://www.paypal.me/MircoWittrien
  * @patreon https://www.patreon.com/MircoWittrien
  * @website https://mwittrien.github.io/
- * @source https://github.com/mwittrien/BetterDiscordAddons/tree/master/Library/
- * @updateUrl https://mwittrien.github.io/BetterDiscordAddons/Library/0BDFDB.plugin.js
+ * @source https://github.com/andmagdo/LightcordAddons/tree/master/Library/
+ * @updateUrl https://raw.githubusercontent.com/andmagdo/LightcordAddons/master/Library/0BDFDB.plugin.js
  */
 
 module.exports = (_ => {
@@ -22,7 +21,7 @@ module.exports = (_ => {
 			"version": "1.8.0",
 			"description": "Required Library for DevilBro's Plugins"
 		},
-		"rawUrl": `https://mwittrien.github.io/BetterDiscordAddons/Library/0BDFDB.plugin.js`,
+		"rawUrl": `https://raw.githubusercontent.com/andmagdo/LightcordAddons/master/Library/0BDFDB.plugin.js`,
 		"changeLog": {
 			"improved": {
 				"Performance": "Startup time was reduced to a 1/10 and overall performance was improved, Might need a Reload with Ctrl+R to work flawlessly"
@@ -1103,7 +1102,7 @@ module.exports = (_ => {
 		
 			const backupData = getBackup(dataFileName, dataFilePath);
 			if (backupData) parseData(backupData);
-			else request.get(`https://mwittrien.github.io/BetterDiscordAddons/Library/_res/${dataFileName}`, (e, r, b) => {
+			else request.get(`https://raw.githubusercontent.com/andmagdo/LightcordAddons/master/Library/_res/${dataFileName}`, (e, r, b) => {
 				if ((e || !b || r.statusCode != 200) && tryAgain) return BDFDB.TimeUtils.timeout(_ => requestLibraryData(), 10000);
 				if (!e && b && r.statusCode == 200) parseData(b, true);
 				else parseData(fs.existsSync(dataFilePath) && (fs.readFileSync(dataFilePath) || "").toString());
@@ -1140,7 +1139,7 @@ module.exports = (_ => {
 		
 		const backupCSS = getBackup(cssFileName, cssFilePath);
 		if (backupCSS) parseCSS(backupCSS);
-		else request.get(`https://mwittrien.github.io/BetterDiscordAddons/Library/_res/${cssFileName}`, (e, r, b) => {
+		else request.get(`https://raw.githubusercontent.com/andmagdo/LightcordAddons/master/Library/_res/${cssFileName}`, (e, r, b) => {
 			if ((e || !b || r.statusCode != 200) && tryAgain) return BDFDB.TimeUtils.timeout(_ => requestLibraryData(), 10000);
 			if (!e && b && r.statusCode == 200) {
 				fs.writeFile(cssFilePath, b, _ => {});
@@ -1179,7 +1178,7 @@ module.exports = (_ => {
 				if (plugin.rawUrl) return plugin.rawUrl;
 				else {
 					let name = InternalData.PluginNameMap && InternalData.PluginNameMap[plugin.name] || plugin.name;
-					return `https://mwittrien.github.io/BetterDiscordAddons/Plugins/${name}/${name}.plugin.js`;
+					return `https://raw.githubusercontent.com/andmagdo/LightcordAddons/master/Plugins/${name}/${name}.plugin.js`;
 				}
 			}
 			else return "";
@@ -8034,12 +8033,6 @@ module.exports = (_ => {
 		changeLogs = BDFDB.DataUtils.load(BDFDB, "changeLogs");
 		BDFDB.PluginUtils.checkChangeLog(BDFDB);
 		
-		if (window.Lightcord && !Node.prototype.isPrototypeOf(window.Lightcord) || window.LightCord && !Node.prototype.isPrototypeOf(window.LightCord)) BDFDB.ModalUtils.open(BDFDB, {
-			header: "Attention!",
-			subHeader: "Modified Client detected",
-			text: "We detected that you are using LightCord. Unlike other client modificaton (BetterDiscord, PowerCord), LightCord is a completely modified client, which is no longer maintained by Discord but instead by a 3rd party. This will put your account at risk, not only because the 3rd party might use your account credentials as they like, you are also breaking a higher instance of Discord's ToS by using a 3rd party client instead of using a simple client mod which injects itself into the original client app. Many Plugins won't flawlessly run on LightCord. We do not support LightCord and as such, we do not provide help or support. You should switch to another modification as soon as possible.",
-			buttons: [{color: "RED", contents: BDFDB.LanguageUtils.LanguageStrings.OKAY, close: true}]
-		});
 		
 		InternalBDFDB.patchPlugin(BDFDB);
 		
@@ -8224,11 +8217,11 @@ module.exports = (_ => {
 		}
 		
 		BDFDB.PatchUtils.patch(BDFDB, LibraryModules.GuildStore, "getGuild", {after: e => {
-			if (e.returnValue && e.methodArguments[0] == InternalData.myGuildId) e.returnValue.banner = `https://mwittrien.github.io/BetterDiscordAddons/Library/_res/BDFDB.banner.png`;
+			if (e.returnValue && e.methodArguments[0] == InternalData.myGuildId) e.returnValue.banner = `https://raw.githubusercontent.com/andmagdo/LightcordAddons/master/Library/_res/BDFDB.banner.png`;
 		}});
 		
 		BDFDB.PatchUtils.patch(BDFDB, LibraryModules.UserStore, "getUser", {after: e => {
-			if (e.returnValue && e.methodArguments[0] == InternalData.myId) e.returnValue.banner = `https://mwittrien.github.io/BetterDiscordAddons/Library/_res/DevilBro.banner.png`;
+			if (e.returnValue && e.methodArguments[0] == InternalData.myId) e.returnValue.banner = `https://raw.githubusercontent.com/andmagdo/LightcordAddons/master/Library/_res/DevilBro.banner.png`;
 		}});
 
 		BDFDB.PatchUtils.patch(BDFDB, LibraryModules.IconUtils, "getGuildBannerURL", {instead: e => {
